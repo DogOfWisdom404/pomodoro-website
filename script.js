@@ -255,13 +255,39 @@ function updatePlaylist() {
     updateNowPlaying();
 }
 
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', function() {
-    // DEBUG: set background to see if script runs
-    document.body.style.background = '#ffe6e6';
+// -----------------------------------------------------------------
+// Load the remote playlist (files that live on the server in /assets)
+function loadRemotePlaylist() {
+    fetch('assets/playlist.json')
+        .then(r => r.ok ? r.json() : Promise.reject('Playlist not found'))
+        .then(list => {
+            // Append each remote track to the existing playlist array
+            list.forEach(track => {
+                state.music.playlist.push({
+                    name: track.name || 'Untitled',
+                    artist: track.artist || 'Unknown',
+                    url: track.url
+                });
+            });
+            updatePlaylist(); // refresh UI
+            // Auto-play the first remote track if playlist is empty and we have tracks
+            if (state.music.playlist.length > 0 && !state.music.isPlaying) {
+                playTrack(0);
+            }
+        })
+        .catch(err => console.warn('Could not load remote playlist:', err));
+}
 
-    // Init music player
-    initMusic();
+// Initialize on DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // DEBUG: set background to see if script runs
+        document.body.style.background = '#ffe6e6';
+
+        // Init music player
+        initMusic();
+
+        // ------------- Load remote playlist (MP3 files in /assets) -------------
+        loadRemotePlaylist();
 
     // Handle file input for music
     var audioInput = document.getElementById('audioInput');
