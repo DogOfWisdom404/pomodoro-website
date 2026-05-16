@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Focus</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="video-container">
+        <video id="bgVideo" autoplay muted loop playsinline>
+            <source src="assets/Take a moment… and relax.Follow @Pengu for more!.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Audio element for music playlist -->
+    <audio id="audioPlayer" src="" preload="metadata" loop></audio>
+
+    <!-- Main Content -->
+    <div class="app">
+        <header class="header">
+            <h1 class="logo">🍅 Pomodoro Focus</h1>
+            <p class="subtitle">Stay focused, one session at a time</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="timer">Timer</button>
+            <button class="tab-btn" data-tab="settings">Settings</button>
+            <button class="tab-btn" data-tab="music">Music</button>
+            <button class="tab-btn" data-tab="analytics">Analytics</button>
+        </nav>
+
+        <!-- Timer Section -->
+        <section class="timer-section" id="timerSection">
+            <div class="timer-mode" id="timerMode">WORK</div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="timer-controls">
+                <button class="btn btn-primary" id="startPauseBtn" onclick="toggleTimer()">
+                    <span id="btnIcon">▶</span>
+                    <span id="btnText">Start</span>
+                </button>
+                <button class="btn btn-secondary" id="resetBtn" onclick="resetTimer()">
+                    ↺ Reset
+                </button>
+                <button class="btn btn-skip" id="skipBtn" onclick="skipSession()">
+                    ⏭ Skip
+                </button>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="settings-section" id="settingsSection">
+            <div class="setting-row">
+                <label>Work Duration</label>
+                <div class="setting-control">
+                    <input type="number" id="workMinutes" class="duration-input" min="1" max="120" value="25">
+                    <span class="setting-unit">min</span>
+                </div>
+            </div>
+            <div class="setting-row">
+                <label>Break Duration</label>
+                <div class="setting-control">
+                    <input type="number" id="breakMinutes" class="duration-input" min="1" max="60" value="5">
+                    <span class="setting-unit">min</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Music Section -->
+        <section class="music-section" id="musicSection">
+            <h2 class="section-title">🎵 Lo-Fi Playlist</h2>
+            <div class="music-controls">
+                <button class="btn-icon" onclick="prevTrack()">⏮</button>
+                <button class="btn-icon btn-play" id="playPauseBtn" onclick="toggleMusic()">▶</button>
+                <button class="btn-icon" onclick="nextTrack()">⏭</button>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50" oninput="setVolume(this.value)">
+            </div>
+            <div class="now-playing" id="nowPlaying">No track selected</div>
+            <div class="playlist" id="playlist"></div>
+            <div class="add-track-section">
+                <input type="file" id="audioInput" accept="audio/*" multiple hidden>
+                <button class="btn btn-outline" onclick="document.getElementById('audioInput').click()">
+                    + Add Local Tracks
+                </button>
+                <p class="hint">Add your own lo-fi .mp3 / .wav / .ogg files</p>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="stats-section hidden" id="analyticsSection">
+            <div class="stat">
+                <span class="stat-number" id="sessionsCompleted">0</span>
+                <span class="stat-label">Sessions Done</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="focusTime">0h 0m</span>
+                <span class="stat-label">Focus Time</span>
+            </div>
+            <button class="btn btn-danger" onclick="resetStats()">Reset Stats</button>
+        </section>
+
+        <footer class="footer">
+            <p>Built for focus. No distractions. No login. Just you. 🧠</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

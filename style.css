@@ -1,0 +1,513 @@
+/* ========================================
+   Pomodoro Focus — MVP Styles
+   Timer + Lo-Fi Music + Background Video
+   ========================================= */
+
+/* Hidden class for off-screen elements */
+.hidden {
+    display: none;
+}
+
+/* --- Reset & Base --- */
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #e84142;
+    --primary-glow: rgba(232, 65, 66, 0.4);
+    --bg-dark: #0a0a0f;
+    --bg-card: rgba(18, 18, 30, 0.85);
+    --bg-card-hover: rgba(28, 28, 50, 0.9);
+    --text-primary: #f0f0f5;
+    --text-secondary: #a0a0b8;
+    --text-dim: #5a5a78;
+    --border: rgba(255, 255, 255, 0.08);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Background Video --- */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+#bgVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4) saturate(0.6);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 50% 50%, transparent 30%, var(--bg-dark) 100%),
+        linear-gradient(to bottom, rgba(10, 10, 15, 0.6) 0%, rgba(10, 10, 15, 0.9) 100%);
+    z-index: -1;
+}
+
+/* --- App Container --- */
+.app {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+}
+
+/* --- Header --- */
+.header {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.logo {
+    font-size: 2.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+/* --- Timer Section --- */
+.timer-section {
+    text-align: center;
+    width: 100%;
+}
+
+.timer-mode {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+    transition: color 0.3s;
+}
+
+.timer-mode.break-mode {
+    color: #4ade80;
+}
+
+.timer-display {
+    font-size: 5.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 28px;
+    text-shadow: 0 0 40px var(--primary-glow);
+    transition: text-shadow 0.3s;
+}
+
+.timer-display.break-display {
+    text-shadow: 0 0 40px rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), #c73637);
+    color: white;
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px var(--primary-glow);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* --- Settings Section --- */
+.settings-section {
+    width: 100%;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.setting-row:last-child {
+    margin-bottom: 0;
+}
+
+.setting-row label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.setting-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.setting-unit {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-left: 5px;
+}
+
+/* Duration input fields */
+.duration-input {
+    width: 60px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.2s;
+}
+
+.duration-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(232, 65, 66, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Music Section --- */
+.music-section {
+    width: 100%;
+    padding: 24px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.music-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.btn-play {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary), #c73637);
+    color: white;
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.btn-play:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px var(--primary-glow);
+}
+
+.volume-slider {
+    width: 100px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    color: var(--text-primary);
+}
+
+.now-playing {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.playlist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.playlist-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.playlist-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.playlist-item.active {
+    background: rgba(232, 65, 66, 0.1);
+    border: 1px solid rgba(232, 65, 66, 0.3);
+}
+
+.track-icon {
+    margin-right: 12px;
+    color: var(--text-secondary);
+}
+
+.track-info {
+    flex: 1;
+}
+
+.track-name {
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.track-artist {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.track-remove {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 4px;
+    margin-left: 8px;
+}
+
+.track-remove:hover {
+    color: var(--primary);
+}
+
+.add-track-section {
+    text-align: center;
+}
+
+.btn-outline {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+}
+
+/* Tab Navigation */
+.tab-nav {
+    display: flex;
+    gap: 8px;
+    background: var(--bg-card);
+    padding: 6px;
+    border-radius: var(--radius);
+    width: 100%;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+    background: rgba(232, 65, 66, 0.2);
+    color: var(--primary);
+}
+
+.stats-section.hidden {
+    display: none !important;
+}
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.btn-danger {
+    padding: 10px 20px;
+    background: rgba(232, 65, 66, 0.1);
+    color: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: center;
+}
+
+.btn-danger:hover {
+    background: rgba(232, 65, 66, 0.2);
+}
+
+/* Analytics Button (now static, centered) */
+.btn-analytics {
+    position: static;
+    margin: 16px auto;
+    display: block;
+    background: rgba(232, 65, 66, 0.15);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: fit-content;
+}
+
+.btn-analytics:hover {
+    background: rgba(232, 65, 66, 0.25);
+}
