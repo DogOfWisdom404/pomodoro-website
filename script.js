@@ -179,7 +179,6 @@ function loadAudioFile(file) {
     var url = URL.createObjectURL(file);
     state.music.playlist.push({
         name: file.name.replace(/\.[^/.]+$/, ''),
-        artist: 'Local',
         url: url
     });
     updatePlaylist();
@@ -300,7 +299,6 @@ function loadRemotePlaylist() {
             list.forEach(track => {
                 state.music.playlist.push({
                     name: track.name || 'Untitled',
-                    artist: track.artist || 'Unknown',
                     url: track.url
                 });
             });
