@@ -325,6 +325,28 @@ body {
     color: var(--text-primary);
 }
 
+.playback-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-family: monospace;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.progress-slider {
+    width: 100%;
+    max-width: 250px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
 .playlist {
     display: flex;
     flex-direction: column;

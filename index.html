@@ -80,6 +80,11 @@
                 <button class="btn-icon" onclick="nextTrack()">⏭</button>
                 <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50" oninput="setVolume(this.value)">
             </div>
+            <div class="playback-container">
+                <span id="currentTime">0:00</span>
+                <input type="range" id="progressSlider" class="progress-slider" min="0" max="100" value="0" oninput="seekTrack(this.value)">
+                <span id="durationTime">0:00</span>
+            </div>
             <div class="now-playing" id="nowPlaying">No track selected</div>
             <div class="playlist" id="playlist"></div>
             <div class="add-track-section">

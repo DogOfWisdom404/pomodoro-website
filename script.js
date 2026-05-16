@@ -163,6 +163,16 @@ function initMusic() {
             playTrack(n);
         }
     });
+
+    // Update playbar as music plays
+    audioPlayer.addEventListener('timeupdate', function() {
+        updateProgress();
+    });
+
+    // Set duration once metadata loads
+    audioPlayer.addEventListener('loadedmetadata', function() {
+        document.getElementById('durationTime').textContent = formatTime(audioPlayer.duration);
+    });
 }
 
 function loadAudioFile(file) {
@@ -230,6 +240,32 @@ function setVolume(value) {
     if (audioPlayer) audioPlayer.volume = parseInt(value) / 100;
 }
 
+function formatTime(seconds) {
+    var m = Math.floor(seconds / 60);
+    var s = Math.floor(seconds % 60);
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function updateProgress() {
+    if (!audioPlayer) return;
+    var current = audioPlayer.currentTime;
+    var total = audioPlayer.duration || 0;
+    
+    document.getElementById('currentTime').textContent = formatTime(current);
+    
+    if (total > 0) {
+        var pct = (current / total) * 100;
+        document.getElementById('progressSlider').value = pct;
+    }
+}
+
+function seekTrack(value) {
+    if (!audioPlayer) return;
+    var total = audioPlayer.duration || 0;
+    var seekTo = (value / 100) * total;
+    audioPlayer.currentTime = seekTo;
+}
+
 function updateNowPlaying() {
     var el = document.getElementById('nowPlaying');
     if (el && state.music.playlist[state.music.currentTrack]) {
@@ -247,7 +283,6 @@ function updatePlaylist() {
         div.innerHTML = '<span class="track-icon">🎵</span>' +
             '<span class="track-info">' +
             '<span class="track-name">' + track.name + '</span>' +
-            '<span class="track-artist">' + track.artist + '</span>' +
             '</span>';
         div.onclick = function() { playTrack(i); };
         el.appendChild(div);
