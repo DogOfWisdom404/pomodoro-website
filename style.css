@@ -369,8 +369,10 @@ body {
 }
 
 .playlist-item.active {
-    background: rgba(232, 65, 66, 0.1);
-    border: 1px solid rgba(232, 65, 66, 0.3);
+    background: rgba(232, 65, 66, 0.3);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    box-shadow: 0 0 10px var(--primary-glow);
 }
 
 .track-icon {
