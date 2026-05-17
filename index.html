@@ -78,6 +78,7 @@
                 <button class="btn-icon" onclick="prevTrack()">⏮</button>
                 <button class="btn-icon btn-play" id="playPauseBtn" onclick="toggleMusic()">▶</button>
                 <button class="btn-icon" onclick="nextTrack()">⏭</button>
+                <button class="btn-icon" id="loopBtn" onclick="toggleLoop()">🔁</button>
                 <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50" oninput="setVolume(this.value)">
             </div>
             <div class="playback-container">
