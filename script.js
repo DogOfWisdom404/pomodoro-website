@@ -15,6 +15,7 @@ const state = {
         playlist: [],
         currentTrack: 0,
         isPlaying: false,
+        isLooping: false,
         volume: 50
     },
     stats: {
@@ -150,6 +151,18 @@ function resetStats() {
 }
 
 // Music functions
+
+function toggleLoop() {
+    state.music.isLooping = !state.music.isLooping;
+    if (audioPlayer) {
+        audioPlayer.loop = state.music.isLooping;
+    }
+    var btn = document.getElementById('loopBtn');
+    if (btn) {
+        btn.classList.toggle('active', state.music.isLooping);
+    }
+}
+
 function initMusic() {
     audioPlayer = document.getElementById('audioPlayer');
     if (!audioPlayer) {
@@ -197,6 +210,7 @@ function playTrack(idx) {
     state.music.isPlaying = true;
     updateNowPlaying();
     updatePlayIcon();
+    updatePlaylist();
 }
 
 function toggleMusic() {
