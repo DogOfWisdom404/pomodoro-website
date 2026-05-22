@@ -87,7 +87,7 @@ function runTimer() {
     updateTimerDisplay();
     if (state.timer.timeLeft <= 0) {
         // Play alert sound
-        var alertSound = new Audio('assets/sounds/alert.wav');
+        var alertSound = new Audio('assets/Popular Alarm Clock Sound Effect.mp3');
         alertSound.play().catch(function(e) { console.warn('Sound playback failed:', e); });
 
         state.stats.sessionsCompleted++;
