@@ -86,6 +86,10 @@ function runTimer() {
     state.timer.timeLeft--;
     updateTimerDisplay();
     if (state.timer.timeLeft <= 0) {
+        // Play alert sound
+        var alertSound = new Audio('assets/sounds/alert.mp3');
+        alertSound.play().catch(function(e) { console.warn('Sound playback failed:', e); });
+
         state.stats.sessionsCompleted++;
         if (state.timer.mode === 'work') {
             state.stats.totalFocusTime += state.timer.workDuration * 60;
