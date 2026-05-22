@@ -87,7 +87,7 @@ function runTimer() {
     updateTimerDisplay();
     if (state.timer.timeLeft <= 0) {
         // Play alert sound
-        var alertSound = new Audio('assets/sounds/alert.mp3');
+        var alertSound = new Audio('assets/sounds/alert.wav');
         alertSound.play().catch(function(e) { console.warn('Sound playback failed:', e); });
 
         state.stats.sessionsCompleted++;
